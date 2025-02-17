@@ -1,0 +1,153 @@
+#include <iostream>
+#include "matrix"
+#include <cmath>
+
+using namespace std;
+struct xy{
+    int x,y;
+};
+struct ta{
+    char nom;
+    bool celda;
+};
+vector<xy> posver(int x, int y){
+    vector<xy>r;
+        if(y-1>=0){
+            r.push_back({x,y-1});
+            r.push_back({x-1,y-1});
+            r.push_back({x+1,y-1});
+        }
+        if(y+1<=8){
+            r.push_back({x,y+1});
+            r.push_back({x-1,y+1});
+            r.push_back({x+1,y+1});
+        }
+        if(x-1>=0)
+            r.push_back({x-1,y});
+        if(x+1<=8)
+            r.push_back({x+1,y});
+    return r;
+}
+vector<xy> obver(vector<xy>&v,matrix<ta>&m){
+    vector<xy>r; int fila,colum;
+    for(int i=0;i<8;++i){
+        fila=v[i].x;
+        colum=v[i].y;
+            if(m[fila][colum].celda==false){
+               r.push_back(v[i]);
+            }
+    }
+        
+    return r;
+}
+xy aestr(vector<xy>&rt,xy pos2){
+    float m=8, r; int p;
+    for(int i=0;i<rt.size();++i){
+        r=sqrt(pow(pos2.x-rt[i].x,2) + pow(pos2.y-rt[i].y,2));
+        if(r<m){
+            m=r;p=i;
+        }
+    }
+    return rt[p];
+}
+xy nuevapos(xy &pos, xy &pos2,matrix<ta>&m){
+    vector<xy> r= posver(pos.x,pos.y);
+    vector<xy> rt = obver(r,m);
+    xy npos = aestr(rt,pos2);
+    return npos;
+    
+}
+void asignar(matrix<ta>&t){
+    t[0][0].nom='T';
+    t[0][0].celda=true;
+    t[0][7].nom='T';
+    t[0][7].celda=true;
+    t[7][0].nom='t';
+    t[7][0].celda=true;
+    t[4][4].nom='t';
+    t[4][4].celda=true;
+    t[0][1].nom='C';
+    t[0][1].celda=true;
+    t[0][6].nom='C';
+    t[0][6].celda=true;
+    t[7][1].nom='c';
+    t[7][1].celda=true;
+    t[7][6].nom='c';
+    t[7][6].celda=true;
+    t[0][2].nom='A';
+    t[0][2].celda=true;
+    t[0][5].nom='A';
+    t[0][5].celda=true;
+    t[7][2].nom='a';
+    t[7][2].celda=true;
+    t[7][5].nom='a';
+    t[7][5].celda=true;
+    t[0][3].nom='R';
+    t[0][3].celda=true;
+    t[0][4].nom='R';
+    t[0][4].celda=true;
+    t[7][3].nom='r';
+    t[7][3].celda=true;
+    t[7][4].nom='r';
+    t[7][4].celda=true;
+    for(int i=0;i<8;++i){
+        t[1][i].nom='P';
+        t[1][i].celda=true;
+        t[6][i].nom='p';
+        t[6][i].celda=true;
+    }
+}
+int main() {
+    matrix<ta>t(8,8);
+    
+    for(int i=0;i<t.size(0);++i){
+        for(int j=0;j<t.size(1);++j){
+            t[i][j].celda=false;
+        }
+    }
+    asignar(t);
+      
+    xy pos, pos2, r;
+    pos.x=4;pos.y=4;
+    pos2.x=4;pos2.y=6;
+    cout<<"Antes del while:";
+    cout<<"\np1: "<<pos.x<<", "<<pos.y<<"\n";
+    cout<<"p2: "<<pos2.x<<", "<<pos2.y<<"\n";
+    
+    do{
+    
+        r=nuevapos(pos,pos2,t);
+        t[pos.x][pos.y].celda=false;
+        t[pos.x][pos.y].nom=00;
+        
+        pos.x=r.x;
+        pos.y=r.y;
+        t[r.x][r.y].nom='t';
+        t[r.x][r.y].celda=true;
+        
+        cout<<endl<<endl;
+        
+    for(int i=0;i<t.size(0);++i){
+        for(int j=0;j<t.size(1);++j){
+            cout<<t[i][j].nom<<"  ";
+        }
+        cout<<endl;
+    }
+        
+        cout<<endl<<endl<<endl;
+    for(int i=0;i<t.size(0);++i){
+        for(int j=0;j<t.size(1);++j){
+            cout<<t[i][j].celda<<"  ";
+        }
+        cout<<endl;
+    }
+        
+    cout<<"\n en el while:";
+    cout<<"\np1: "<<pos.x<<", "<<pos.y<<"\n";
+    cout<<"p2: "<<pos2.x<<", "<<pos2.y<<"\n";
+    
+    }while(pos.x!=pos2.x || pos.y!=pos2.y);
+    
+    
+    return 0;
+}
