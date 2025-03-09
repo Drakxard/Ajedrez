@@ -1,0 +1,5 @@
+world: "ejemplo-andaa.wbt"
+version: "R2025b"
+publish: true
+type: benchmark
+dockerCompose:theia:../controllers/driff_drive_controller_cpp
