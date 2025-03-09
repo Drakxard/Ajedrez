@@ -1,0 +1,144 @@
+#VRML_SIM R2025a utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/floors/protos/RectangleArena.proto"
+
+WorldInfo {
+}
+Viewpoint {
+  orientation -0.13240863986477625 0.37813345794326336 0.916233070824793 0.7301183226803977
+  position -0.4498974844293743 -1.3278201929462405 0.13766594406791025
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  translation -0.32 0.29 0
+  floorSize 8 8
+  floorTileSize 2 2
+}
+Robot {
+  translation 0.04661419271104039 -0.8610607464015049 -5.615552975903049e-05
+  rotation -0.002580733728201759 -0.05514130237820611 0.9984752258245867 3.0483824439265317
+  children [
+    InertialUnit {
+      translation 0 0 0.09
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 0.01 0.01 0.01
+          }
+        }
+      ]
+      name "imu"
+    }
+    Solid {
+      translation 0.015 0.045 0.07
+      children [
+        DEF eye Shape {
+          appearance PBRAppearance {
+            baseColor 1 0 0
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 0.005 0.005 0.005
+          }
+        }
+      ]
+      name "solid(2)"
+    }
+    Solid {
+      translation -0.015 0.045 0.07
+      children [
+        USE eye
+      ]
+      name "solid(3)"
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -163.63501123445977
+        anchor 0.025 0 0.025
+      }
+      device [
+        RotationalMotor {
+          name "motor_1"
+        }
+      ]
+      endPoint Solid {
+        translation 0.045 -8.280632838596425e-08 0.024999703331581323
+        rotation -0.13455023531206428 0.9817439983084573 -0.13444313282124773 1.588423791914059
+        children [
+          DEF wheel Shape {
+            appearance PBRAppearance {
+              baseColor 1 0 0
+              roughness 1
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.01
+              radius 0.025
+            }
+          }
+        ]
+        boundingObject USE wheel
+        physics DEF wheel_fisica Physics {
+        }
+        linearVelocity 0.014634620627121618 0.15630721369386372 -1.3789041044773066e-06
+        angularVelocity -6.252664815185674 0.585418448639041 0.00017381731856664558
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -163.6350144861598
+        anchor -0.045 0 0.025
+      }
+      device [
+        RotationalMotor {
+          name "motor_2"
+        }
+      ]
+      endPoint Solid {
+        translation -0.045 -8.277418605903766e-08 0.024999703450471145
+        rotation -0.13455180851950055 0.981743567539061 -0.13444470394853442 1.5884242244690001
+        children [
+          USE wheel
+        ]
+        name "solid(1)"
+        boundingObject USE wheel
+        physics USE wheel_fisica
+        linearVelocity 0.01463499751106638 0.1563241316820067 7.438728194074426e-07
+        angularVelocity -6.25266491569024 0.5854182298451892 0.0001735998038107098
+      }
+    }
+    DEF body Pose {
+      translation 0 0 0.045
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 0 1
+            roughness 1
+            metalness 0
+          }
+          geometry Cylinder {
+            height 0.08
+            radius 0.045
+          }
+        }
+      ]
+    }
+  ]
+  boundingObject USE body
+  physics Physics {
+  }
+  controller "driff_drive_controller_cpp"
+  linearVelocity 0.014635052895004138 0.15631749866544797 7.740046947994245e-07
+  angularVelocity -1.262754792208634e-05 -2.1277764670746224e-05 0.00023554961779977953
+}
