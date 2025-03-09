@@ -1,3 +1,5 @@
+world: "robot/worlds/ejemplo-andaa.wbt"
+version: "R2025b"
 publish: true
 type: benchmark
 dockerCompose:theia:robot/controllers/driff_drive_controller_cpp
